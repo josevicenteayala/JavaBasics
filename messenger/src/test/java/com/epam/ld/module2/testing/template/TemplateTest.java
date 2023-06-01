@@ -29,4 +29,14 @@ class TemplateTest {
         List<String> actualVariables = template.getVariableNames();
         assertEquals(expectedVariables, actualVariables);
     }
+
+    @Test
+    public void testGetVariableNamesWithDots() {
+        Template template = new Template("Hello, #{user.name}! Your balance is $#{account.balance}.");
+        List<String> expectedVariables = new ArrayList<>();
+        expectedVariables.add("user.name");
+        expectedVariables.add("account.balance");
+        List<String> actualVariables = template.getVariableNames();
+        assertEquals(expectedVariables, actualVariables);
+    }
 }
