@@ -44,4 +44,15 @@ public class TemplateEngineTest {
         Map<String, String> variables = Map.of("name","Jose") ;
         assertThrows(PlaceholderValueException.class, () -> templateEngine.generateMessage(template, variables));
     }
+
+    @Test
+    public void testVariableReplacementWithAnotherTag() throws MissingValueException {
+        TemplateEngine engine = new TemplateEngine();
+        Template template = new Template("Hello #{name}!");
+        Map<String, String> variables = Map.of("name", "#{lastName}");
+
+        String output = engine.generateMessage(template, variables);
+
+        assertEquals("Hello #{lastName}!", output);
+    }
 }
