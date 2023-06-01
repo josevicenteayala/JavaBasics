@@ -30,7 +30,7 @@ public class Template {
         while (matcher.find()) {
             variableNames.add(matcher.group(1));
         }
-        if(variableNames.isEmpty()){
+        if (variableNames.isEmpty()) {
             throw new PlaceholderValueException("Missing placeholder detected: unable to get placeholders from text " + text);
         }
         return variableNames;

@@ -1,11 +1,12 @@
 package com.epam.ld.module2.testing.template;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import com.epam.ld.module2.testing.exceptions.PlaceholderValueException;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class TemplateTest {
 
@@ -54,7 +55,6 @@ class TemplateTest {
     @Test
     public void testGetVariableNamesWithMissingClosingBrace() {
         Template template = new Template("Hello, #{name! You forgot the closing brace.");
-        Set<String> actualVariables = template.getVariableNames();
-        assertTrue(actualVariables.isEmpty());
+        assertThrows(PlaceholderValueException.class, ()-> template.getVariableNames());
     }
 }
