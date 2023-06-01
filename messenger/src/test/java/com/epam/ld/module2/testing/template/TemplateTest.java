@@ -39,4 +39,14 @@ class TemplateTest {
         List<String> actualVariables = template.getVariableNames();
         assertEquals(expectedVariables, actualVariables);
     }
+
+    @Test
+    public void testGetVariableNamesWithDuplicates() {
+        Template template = new Template("Hello, #{name}! Your age is #{age}. Hello again, #{name}!");
+        List<String> expectedVariables = new ArrayList<>();
+        expectedVariables.add("name");
+        expectedVariables.add("age");
+        List<String> actualVariables = template.getVariableNames();
+        assertEquals(expectedVariables, actualVariables);
+    }
 }
