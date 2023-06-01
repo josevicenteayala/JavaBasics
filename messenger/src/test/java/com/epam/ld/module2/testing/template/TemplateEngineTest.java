@@ -54,4 +54,12 @@ public class TemplateEngineTest {
 
         assertEquals("Hello #{lastName}!", output);
     }
+
+    @Test
+    public void testVariableReplacementWithoutPlaceholders() {
+        TemplateEngine templateEngine = new TemplateEngine();
+        Template template = new Template("Hello team!");
+        Map<String, String> variables = Map.of("name", "Jose");
+        assertThrows(PlaceholderValueException.class, () -> templateEngine.generateMessage(template, variables));
+    }
 }
