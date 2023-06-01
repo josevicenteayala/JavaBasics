@@ -35,4 +35,12 @@ public class TemplateEngineTest {
         String message = templateEngine.generateMessage(template, variables);
         assertEquals("Hello, Jose! You are a Java programmer.", message);
     }
+
+    @Test
+    public void testGenerateMessageWithMissingVariablesReplacements() {
+        TemplateEngine templateEngine = new TemplateEngine();
+        Template template = new Template("Hello, #{name}! You are a #{language} programmer.");
+        Map<String, String> variables = Map.of("name","Jose") ;
+        assertThrows(PlaceholderValueException.class, () -> templateEngine.generateMessage(template, variables));
+    }
 }
