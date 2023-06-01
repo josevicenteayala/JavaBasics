@@ -3,7 +3,10 @@ package com.epam.ld.module2.testing.template;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 
 class TemplateTest {
@@ -23,30 +26,30 @@ class TemplateTest {
     @Test
     public void testGetVariableNames() {
         Template template = new Template("Hello, #{name}! You are #{age} years old.");
-        List<String> expectedVariables = new ArrayList<>();
+        Set<String> expectedVariables = new HashSet<>();
         expectedVariables.add("name");
         expectedVariables.add("age");
-        List<String> actualVariables = template.getVariableNames();
+        Set<String> actualVariables = template.getVariableNames();
         assertEquals(expectedVariables, actualVariables);
     }
 
     @Test
     public void testGetVariableNamesWithDots() {
         Template template = new Template("Hello, #{user.name}! Your balance is $#{account.balance}.");
-        List<String> expectedVariables = new ArrayList<>();
+        Set<String> expectedVariables = new HashSet<>();
         expectedVariables.add("user.name");
         expectedVariables.add("account.balance");
-        List<String> actualVariables = template.getVariableNames();
+        Set<String> actualVariables = template.getVariableNames();
         assertEquals(expectedVariables, actualVariables);
     }
 
     @Test
     public void testGetVariableNamesWithDuplicates() {
         Template template = new Template("Hello, #{name}! Your age is #{age}. Hello again, #{name}!");
-        List<String> expectedVariables = new ArrayList<>();
+        Set<String> expectedVariables = new HashSet<>();
         expectedVariables.add("name");
         expectedVariables.add("age");
-        List<String> actualVariables = template.getVariableNames();
+        Set<String> actualVariables = template.getVariableNames();
         assertEquals(expectedVariables, actualVariables);
     }
 }

@@ -1,7 +1,7 @@
 package com.epam.ld.module2.testing.template;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,8 +20,8 @@ public class Template {
         return text;
     }
 
-    public List<String> getVariableNames() {
-        List<String> variableNames = new ArrayList<>();
+    public Set<String> getVariableNames() {
+        Set<String> variableNames = new HashSet<>();
         Pattern pattern = Pattern.compile("#\\{([\\w\\.]+)}");
         Matcher matcher = pattern.matcher(text);
 
