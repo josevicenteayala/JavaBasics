@@ -45,4 +45,19 @@ class MessengerTest {
         assertEquals("Hello John!", console.getOutput());
     }
 
+    @Test
+    public void testFileMode(){
+        PrintOutput fileOutput = new FileOutput();
+        TemplateEngine engine = new TemplateEngine();
+        MailServer mailServer = mock(MailServer.class);
+        Messenger messenger = new Messenger(mailServer, engine);
+        fileOutput.input("input.txt").ctrlD();
+        Map<String, String> variables = Map.of("name", "John");
+        fileOutput.input(variables).ctrlP();
+
+        messenger.printMode(fileOutput);
+
+        assertEquals("Hello John!", fileOutput.getOutput());
+    }
+
 }
