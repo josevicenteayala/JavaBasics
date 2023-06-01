@@ -1,8 +1,8 @@
 package com.epam.ld.module2.testing.template;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 class TemplateTest {
 
@@ -10,6 +10,12 @@ class TemplateTest {
     public void testConstructor() {
         Template template = new Template("Hello, world!");
         assertEquals(Template.class,template.getClass());
+    }
+
+    @Test
+    public void testValidateConstructorInjection() {
+        Template template = new Template("Hello, world!");
+        assertEquals("Hello, world!", template.getText());
     }
 
 }
