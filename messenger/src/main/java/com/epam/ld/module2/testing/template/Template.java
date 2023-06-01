@@ -10,4 +10,8 @@ public class Template {
     public Template(String text) {
         this.text = text;
     }
+
+    public String getText() {
+        return text;
+    }
 }
