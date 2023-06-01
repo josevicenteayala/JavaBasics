@@ -1,5 +1,7 @@
 package com.epam.ld.module2.testing.template;
 
+import com.epam.ld.module2.testing.exceptions.PlaceholderValueException;
+
 import java.util.HashSet;
 import java.util.Set;
 import java.util.regex.Matcher;
@@ -28,7 +30,9 @@ public class Template {
         while (matcher.find()) {
             variableNames.add(matcher.group(1));
         }
-
+        if(variableNames.isEmpty()){
+            throw new PlaceholderValueException("Missing placeholder detected: unable to get placeholders from text " + text);
+        }
         return variableNames;
     }
 }
