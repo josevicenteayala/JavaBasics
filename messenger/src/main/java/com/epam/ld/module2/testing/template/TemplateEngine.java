@@ -1,6 +1,5 @@
 package com.epam.ld.module2.testing.template;
 
-import com.epam.ld.module2.testing.exceptions.MissingValueException;
 import com.epam.ld.module2.testing.exceptions.PlaceholderValueException;
 
 import java.util.HashSet;
@@ -18,7 +17,7 @@ public class TemplateEngine {
      * @param variables with the values to replace the placeholders
      * @return the string
      */
-    public String generateMessage(Template template, Map<String, String> variables) throws MissingValueException {
+    public String generateMessage(Template template, Map<String, String> variables) {
 
         Set<String> variableNames = template.getVariableNames();
         Set<String> providedVariables = variables.keySet();
@@ -36,9 +35,6 @@ public class TemplateEngine {
             if (text.contains(key)) {
                 text = text.replace(key, entry.getValue());
             }
-        }
-        if (text.contains("#{")) {
-            throw new MissingValueException("Failed to generate the message: incomplete placeholder replacement.");
         }
         return text;
     }

@@ -1,7 +1,5 @@
 package com.epam.ld.module2.testing;
 
-
-import com.epam.ld.module2.testing.exceptions.MissingValueException;
 import com.epam.ld.module2.testing.template.Template;
 import com.epam.ld.module2.testing.template.TemplateEngine;
 
@@ -32,7 +30,7 @@ public class Messenger {
      * @param client   the client
      * @param template the template
      */
-    public void sendMessage(Client client, Template template, Map<String,String> variables) throws MissingValueException {
+    public void sendMessage(Client client, Template template, Map<String,String> variables) {
         String messageContent =
             templateEngine.generateMessage(template, variables);
         mailServer.send(client.getAddresses(), messageContent);

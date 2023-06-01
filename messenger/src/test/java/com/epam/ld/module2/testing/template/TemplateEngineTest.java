@@ -3,7 +3,6 @@ package com.epam.ld.module2.testing.template;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.epam.ld.module2.testing.exceptions.MissingValueException;
 import com.epam.ld.module2.testing.exceptions.PlaceholderValueException;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +11,7 @@ import java.util.Map;
 public class TemplateEngineTest {
 
     @Test
-    public void testGenerateValidMessage() throws MissingValueException {
+    public void testGenerateValidMessage() {
         TemplateEngine templateEngine = new TemplateEngine();
         Template template = new Template("Hello, #{name}! You are a #{language} programmer.");
         Map<String, String> variables = Map.of("name","Jose", "language","Java") ;
@@ -29,7 +28,7 @@ public class TemplateEngineTest {
     }
 
     @Test
-    public void testGenerateMessageWithAdditionalVariablesReplacements() throws MissingValueException {
+    public void testGenerateMessageWithAdditionalVariablesReplacements() {
         TemplateEngine templateEngine = new TemplateEngine();
         Template template = new Template("Hello, #{name}! You are a #{language} programmer.");
         Map<String, String> variables = Map.of("name","Jose", "language","Java", "tag","Not used");
@@ -46,7 +45,7 @@ public class TemplateEngineTest {
     }
 
     @Test
-    public void testVariableReplacementWithAnotherTag() throws MissingValueException {
+    public void testVariableReplacementWithAnotherTag() {
         TemplateEngine engine = new TemplateEngine();
         Template template = new Template("Hello #{name}!");
         Map<String, String> variables = Map.of("name", "#{lastName}");
