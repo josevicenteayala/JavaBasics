@@ -1,8 +1,11 @@
 package com.epam.ld.module2.testing;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
+import com.epam.ld.module2.testing.modes.ConsoleMode;
 import com.epam.ld.module2.testing.modes.PrintOutput;
 import com.epam.ld.module2.testing.template.Template;
 import com.epam.ld.module2.testing.template.TemplateEngine;
@@ -36,10 +39,10 @@ class MessengerTest {
         Map<String, String> variables = Map.of("name", "John");
 
         console.input(input).ctrlD();
-        console.input(variables).ctrlD();
-        messenger.consoleMode(console.getReader(), console.getWriter());
+        console.input(variables).ctrlP();
+        messenger.printMode(console);
 
-        assertEquals("Hello John!\n", console.getOutput());
+        assertEquals("Hello John!", console.getOutput());
     }
 
 }

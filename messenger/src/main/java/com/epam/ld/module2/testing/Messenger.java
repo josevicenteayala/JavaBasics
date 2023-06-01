@@ -1,5 +1,6 @@
 package com.epam.ld.module2.testing;
 
+import com.epam.ld.module2.testing.modes.PrintOutput;
 import com.epam.ld.module2.testing.template.Template;
 import com.epam.ld.module2.testing.template.TemplateEngine;
 
@@ -35,5 +36,8 @@ public class Messenger {
         String messageContent =
             templateEngine.generateMessage(template, variables);
         mailServer.send(client.getAddresses(), messageContent);
+    }
+
+    public void printMode(PrintOutput console) {
     }
 }
