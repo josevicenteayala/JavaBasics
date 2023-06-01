@@ -5,4 +5,9 @@ package com.epam.ld.module2.testing.template;
  */
 public class Template {
 
+    private final String text;
+
+    public Template(String text) {
+        this.text = text;
+    }
 }

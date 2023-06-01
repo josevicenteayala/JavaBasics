@@ -8,7 +8,8 @@ class TemplateTest {
 
     @Test
     public void testConstructor() {
-        fail();
+        Template template = new Template("Hello, world!");
+        assertEquals(Template.class,template.getClass());
     }
 
 }
