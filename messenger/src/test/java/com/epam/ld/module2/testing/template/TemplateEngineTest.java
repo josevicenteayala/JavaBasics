@@ -25,7 +25,7 @@ public class TemplateEngineTest {
         TemplateEngine templateEngine = new TemplateEngine();
         Template template = new Template("Hello, #{name}! You are a #{language} programmer at #{company}.");
         Map<String, String> variables = Map.of("name","Jose", "language","Java") ;
-        assertThrows(MissingValueException.class, () -> templateEngine.generateMessage(template, variables));
+        assertThrows(PlaceholderValueException.class, () -> templateEngine.generateMessage(template, variables));
     }
 
     @Test
