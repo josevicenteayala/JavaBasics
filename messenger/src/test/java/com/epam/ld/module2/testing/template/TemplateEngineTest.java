@@ -62,4 +62,15 @@ public class TemplateEngineTest {
         Map<String, String> variables = Map.of("name", "Jose");
         assertThrows(PlaceholderValueException.class, () -> templateEngine.generateMessage(template, variables));
     }
+
+    @Test
+    public void testLatinCharacterSet() {
+        TemplateEngine engine = new TemplateEngine();
+        Template template = new Template("São Paulo: #{number} é uma cidade incrível!");
+        Map<String, String> variables = Map.of("number", "123");
+
+        String output = engine.generateMessage(template, variables);
+
+        assertEquals("São Paulo: 123 é uma cidade incrível!", output);
+    }
 }

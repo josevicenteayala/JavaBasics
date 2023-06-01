@@ -22,6 +22,9 @@ public class Template {
         return text;
     }
 
+    /**
+     * @return the set of placeholder names expected
+     */
     public Set<String> getVariableNames() {
         Set<String> variableNames = new HashSet<>();
         Pattern pattern = Pattern.compile("#\\{([\\w\\.]+)}");

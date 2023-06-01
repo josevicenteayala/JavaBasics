@@ -29,6 +29,7 @@ public class Messenger {
      *
      * @param client   the client
      * @param template the template
+     * @param variables values to replace the placeholders
      */
     public void sendMessage(Client client, Template template, Map<String,String> variables) {
         String messageContent =
