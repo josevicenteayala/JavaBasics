@@ -21,7 +21,7 @@ public class TemplateEngineTest {
     }
 
     @Test
-    public void testGenerateMessageWithIncompleteVariablesReplacements() {
+    public void testGenerateErrorWhenIncompleteVariablesAreProvided() {
         TemplateEngine templateEngine = new TemplateEngine();
         Template template = new Template("Hello, #{name}! You are a #{language} programmer at #{company}.");
         Map<String, String> variables = Map.of("name","Jose", "language","Java") ;
