@@ -1,6 +1,7 @@
 package com.epam.ld.module2.testing.template;
 
 import com.epam.ld.module2.testing.exceptions.MissingValueException;
+import com.epam.ld.module2.testing.exceptions.PlaceholderValueException;
 
 import java.util.Map;
 
@@ -16,6 +17,11 @@ public class TemplateEngine {
      * @return the string
      */
     public String generateMessage(Template template, Map<String, String> variables) throws MissingValueException {
+
+        if(!template.getVariableNames().equals(variables.keySet())){
+         throw new PlaceholderValueException("Missing variables detected: unable to replace all placeholders.");
+        }
+
         String text = template.getText();
         for (Map.Entry<String, String> entry : variables.entrySet()) {
             String key = "#{" + entry.getKey() + "}";
