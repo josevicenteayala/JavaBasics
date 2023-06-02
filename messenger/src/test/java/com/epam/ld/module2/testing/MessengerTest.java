@@ -5,24 +5,70 @@ import static org.mockito.Mockito.verify;
 
 import com.epam.ld.module2.testing.template.Template;
 import com.epam.ld.module2.testing.template.TemplateEngine;
+
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
+import org.mockito.Mock;
 
 class MessengerTest {
 
+    public static final String MAIL_ADDRESS = "test@example.com";
+    @Mock
+    private static MailServer mailServer;
+    private static Messenger messenger;
+
+    @BeforeAll
+    public static void init(){
+        mailServer = mock(MailServer.class);
+        TemplateEngine engine = new TemplateEngine();
+        messenger = new Messenger(mailServer, engine);
+    }
+
     @Test
     void testSendMessage() {
-        MailServer mailServer = mock(MailServer.class);
-        TemplateEngine engine = new TemplateEngine();
-        Messenger messenger = new Messenger(mailServer, engine);
         Client client = new Client();
-        client.setAddresses("test@example.com");
+        client.setAddresses(MAIL_ADDRESS);
         Template template = new Template("Hello #{name}!");
         Map<String, String> variables = Map.of("name", "John");
 
         messenger.sendMessage(client, template, variables);
 
-        verify(mailServer).send("test@example.com", "Hello John!");
+        verify(mailServer).send(MAIL_ADDRESS, "Hello John!");
+    }
+
+    @TestFactory
+    Stream<DynamicTest> testSendMessages() {
+        Collection<Object[]> templates = Arrays.asList(
+                new Object[]{
+                        new Template("São Paulo: #{number} é uma cidade incrível!"),"São Paulo: 65 é uma cidade incrível!"},
+                new Object[]{
+                        new Template("Hello #{name}!"),"Hello John!"},
+                new Object[]{
+                        new Template("The interview for #{rol} will take place in Room #{room}."),"The interview for engineers will take place in Room 666."}
+        );
+        Map<String, String> variables = Map.of("name", "John",
+                "number","65",
+                "rol","engineers",
+                "room","666");
+        Client client = new Client();
+        client.setAddresses(MAIL_ADDRESS);
+
+        return templates.stream()
+                .map(object -> {
+                    Template template = (Template) object[0];
+                    String expectedResult = object[1].toString();
+                    return DynamicTest.dynamicTest("Template text: " + template.getText(),
+                            ()-> {
+                                messenger.sendMessage(client, template, variables);
+                                verify(mailServer).send(MAIL_ADDRESS, expectedResult);
+                            });
+                });
     }
 
 }
