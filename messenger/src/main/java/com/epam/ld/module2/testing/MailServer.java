@@ -12,5 +12,6 @@ public class MailServer {
      * @param messageContent the message content
      */
     public void send(String addresses, String messageContent) {
+        System.out.println(String.format("Sending message to %s with this content: %s",addresses, messageContent));
     }
 }
