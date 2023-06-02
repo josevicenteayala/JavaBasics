@@ -1,5 +1,6 @@
 package com.epam.ld.module2.testing.modes;
 
+import java.io.IOException;
 import java.util.Map;
 
 public interface PrintOutput {
