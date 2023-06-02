@@ -1,6 +1,5 @@
 package com.epam.ld.module2.testing;
 
-import static org.mockito.Mockito.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -12,7 +11,7 @@ import org.junit.jupiter.api.Test;
 class MessengerTest {
 
     @Test
-    public void testSendMessage() {
+    void testSendMessage() {
         MailServer mailServer = mock(MailServer.class);
         TemplateEngine engine = new TemplateEngine();
         Messenger messenger = new Messenger(mailServer, engine);
@@ -23,7 +22,7 @@ class MessengerTest {
 
         messenger.sendMessage(client, template, variables);
 
-        verify(mailServer).send(eq("test@example.com"), eq("Hello John!"));
+        verify(mailServer).send("test@example.com", "Hello John!");
     }
 
 }
