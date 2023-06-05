@@ -1,6 +1,8 @@
 package com.epam.ld.module2.testing.modes;
 
+import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
@@ -8,35 +10,31 @@ import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Map;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+
 class FileOutputModeTest {
 
-    /**
-     * This test is marked as disable because it requires a real input file and produce a new file with results.
-     * Authorizing input/output routes could work.
-     * */
+    public static final String HELLO_NAME = "Hello #{name}!";
+
     @Test
-    @Disabled
-    public void testPrintMessageUsingFileMode() {
+    @ExtendWith(TemporaryDirectoryExtension.class)
+    public void testPrintMessageUsingFileModeWithTemporaryDirectory(Path tempDir) throws IOException {
+        Path testFile = tempDir.resolve("input.txt");
+        Files.write(testFile, asList(HELLO_NAME));
+        List<String> actualLines = Files.readAllLines(testFile);
+        assertIterableEquals(asList(HELLO_NAME), actualLines);
+
         PrintOutput fileOutput = new FileOutputMode();
 
-        fileOutput.input("/home/joseayala/input.txt").ctrlD();
+        fileOutput.input(testFile.toString()).ctrlD();
         Map<String, String> variables = Map.of("name", "John");
         fileOutput.input(variables).ctrlP();
 
         String expectedOutput = "Hello John!\n";
         assertEquals(expectedOutput, fileOutput.getOutput());
-
-        //Read the file created with the response
-        Path pathResponse = Path.of("/home/joseayala/output.txt");
-        try {
-            String output = Files.readString(pathResponse);
-            assertEquals(expectedOutput, output);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Test

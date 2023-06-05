@@ -10,10 +10,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Stream;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
+
+import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 
 class MessengerTest {
@@ -23,8 +21,8 @@ class MessengerTest {
     private static MailServer mailServer;
     private static Messenger messenger;
 
-    @BeforeAll
-    public static void init(){
+    @BeforeEach
+    public void init(){
         mailServer = mock(MailServer.class);
         TemplateEngine engine = new TemplateEngine();
         messenger = new Messenger(mailServer, engine);
