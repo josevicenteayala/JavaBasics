@@ -3,13 +3,20 @@ package com.epam.ld.module2.testing.modes;
 import static java.util.Arrays.asList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertIterableEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
+import com.epam.metadata.UnitTest;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -57,6 +64,21 @@ class FileOutputModeTest {
         doNothing().when(fileOutput).ctrlD();
         when(fileOutput.input(anyString())).thenReturn(fileOutput);
         when(fileOutput.input(any(Map.class))).thenReturn(fileOutput);
+        when(fileOutput.getOutput()).thenReturn(expectedOutput);
+
+        fileOutput.input("input.txt").ctrlD();
+        Map<String, String> variables = Map.of("name", "John");
+        fileOutput.input(variables).ctrlP();
+
+        assertEquals(expectedOutput, fileOutput.getOutput());
+    }
+
+    @UnitTest
+    @DisplayName("Test print message using File mode")
+    public void testPrintMessageUsingFileModeAndCustomExtension() {
+        String expectedOutput = "Hello John!\n";
+        PrintOutput fileOutput = spy(FileOutputMode.class);
+        doNothing().when(fileOutput).ctrlP();
         when(fileOutput.getOutput()).thenReturn(expectedOutput);
 
         fileOutput.input("input.txt").ctrlD();
