@@ -1,8 +1,5 @@
 package com.epam.ld.module2.testing;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-
 import com.epam.ld.module2.testing.template.Template;
 import com.epam.ld.module2.testing.template.TemplateEngine;
 
@@ -14,18 +11,25 @@ import java.util.stream.Stream;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 
+import static org.mockito.Mockito.*;
+
 class MessengerTest {
 
     public static final String MAIL_ADDRESS = "test@example.com";
     @Mock
     private static MailServer mailServer;
+    @Mock
+    private static MailServer mailServerSpy;
     private static Messenger messenger;
+    private static Messenger messengerSpy;
 
     @BeforeEach
     public void init(){
         mailServer = mock(MailServer.class);
+        mailServerSpy = spy(MailServer.class);
         TemplateEngine engine = new TemplateEngine();
         messenger = new Messenger(mailServer, engine);
+        messengerSpy = new Messenger(mailServerSpy,engine);
     }
 
     @Test
@@ -67,6 +71,18 @@ class MessengerTest {
                                 verify(mailServer).send(MAIL_ADDRESS, expectedResult);
                             });
                 });
+    }
+
+    @Test
+    void testSendMessageUsingPartialMock() {
+        Client client = new Client();
+        client.setAddresses(MAIL_ADDRESS);
+        Template template = new Template("Hello #{name}!");
+        Map<String, String> variables = Map.of("name", "John");
+
+        messengerSpy.sendMessage(client, template, variables);
+
+        verify(mailServerSpy).send(MAIL_ADDRESS, "Hello John!");
     }
 
 }
