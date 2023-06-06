@@ -3,11 +3,14 @@ package com.epam.ld.module2.testing.modes;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class ConsoleModeTest {
+
+    private ConsoleMode consoleMode = mock(ConsoleMode.class);
 
     @Test
     void testPrintMessageUsingConsoleMode() {
@@ -41,5 +44,17 @@ class ConsoleModeTest {
         console.input(variables);
 
         assertNull(console.getOutput());
+    }
+
+    @Test
+    void testPrintMessageUsingConsoleModeMocking() {
+        doNothing().when(consoleMode).ctrlD();
+        doNothing().when(consoleMode).ctrlP();
+        String output = "Hello John!";
+        when(consoleMode.getOutput()).thenReturn(output);
+
+        consoleMode.input("Hello #{name}!");
+
+        assertEquals(output, consoleMode.getOutput());
     }
 }
