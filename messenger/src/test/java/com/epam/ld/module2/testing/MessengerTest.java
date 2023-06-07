@@ -1,17 +1,22 @@
 package com.epam.ld.module2.testing;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+
 import com.epam.ld.module2.testing.template.Template;
 import com.epam.ld.module2.testing.template.TemplateEngine;
-
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Stream;
-
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DynamicTest;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestFactory;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.mockito.Mock;
-
-import static org.mockito.Mockito.*;
 
 class MessengerTest {
 
@@ -75,6 +80,19 @@ class MessengerTest {
 
     @Test
     void testSendMessageUsingPartialMock() {
+        Client client = new Client();
+        client.setAddresses(MAIL_ADDRESS);
+        Template template = new Template("Hello #{name}!");
+        Map<String, String> variables = Map.of("name", "John");
+
+        messengerSpy.sendMessage(client, template, variables);
+
+        verify(mailServerSpy).send(MAIL_ADDRESS, "Hello John!");
+    }
+
+    @DisabledOnOs(OS.SOLARIS)
+    @Test
+    void testSendMessageOnlyWhenPropertyIsTrue() {
         Client client = new Client();
         client.setAddresses(MAIL_ADDRESS);
         Template template = new Template("Hello #{name}!");

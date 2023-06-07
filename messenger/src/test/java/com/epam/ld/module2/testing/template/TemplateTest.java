@@ -1,12 +1,12 @@
 package com.epam.ld.module2.testing.template;
 
-import java.util.HashSet;
-import java.util.Set;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.epam.ld.module2.testing.exceptions.PlaceholderValueException;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class TemplateTest {
 
